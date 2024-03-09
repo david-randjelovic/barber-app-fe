@@ -1,0 +1,7 @@
+{
+  "name": "berbernica",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
