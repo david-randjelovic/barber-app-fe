@@ -1,0 +1,50 @@
+ion-content {
+    ion-list {
+      --padding-start: 0;
+      --padding-end: 0;
+      --padding-top: 0;
+      --padding-bottom: 0;
+  
+      ion-item {
+        --padding-start: 0;
+        --padding-end: 0;
+        --padding-top: 0;
+        --padding-bottom: 0;
+        --inner-padding-end: 16px;
+        --inner-padding-start: 16px;
+  
+        &.ion-item-select {
+          margin-top: 20px;
+        }
+  
+        &.ion-item-datetime {
+          margin-top: 20px;
+        }
+  
+        ion-label {
+          margin-bottom: 8px; // Adjust as needed for spacing
+        }
+  
+        ion-datetime {
+          --padding-start: 0;
+          --padding-end: 0;
+          --padding-top: 0;
+          --padding-bottom: 0;
+        }
+      }
+    }
+  }
+  
+  ion-footer {
+    ion-toolbar {
+      --padding-start: 20px;
+      --padding-end: 20px;
+      --padding-top: 10px;
+      --padding-bottom: 10px;
+    }
+  
+    ion-button {
+      width: 100%;
+      --border-radius: 8px;
+    }
+  }

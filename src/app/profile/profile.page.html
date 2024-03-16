@@ -1,0 +1,68 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Profile
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="upper_div">
+    <ion-row>
+      <ion-col class="pfp-wrapper">
+        <ion-thumbnail (click)="onPfpClick()">
+          <img class="pfp" [src]="userService.userData?.profile_picture_url ?? '../../../assets/img/default-pfp.svg'" alt="Profile Image"/>
+        </ion-thumbnail>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="banner" (click)="onBannerClick()" [style.background-image]="'url(' + (userService.userData?.banner_url ? userService.userData?.banner_url : '../../../assets/img/default-pfp.svg') + ')'"alt="Profile Image"></div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="name">
+          <ion-label>{{userService.userData?.first_name}} {{userService.userData?.second_name}}</ion-label>
+        </div>
+        <ion-label class="mail">{{userService.userData?.email}}</ion-label>
+      </ion-col>
+    </ion-row>
+  </div>
+  <input type="file" style="display: none" (change)="onPfpSelected($event)" #pfpInput/>
+  <input type="file" style="display: none" (change)="onBannerSelected($event)" #bannerInput/>
+
+  <div class="section_div">
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="mail"></ion-icon>
+      <ion-label>Change Email</ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline" color="medium" class="icon"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-label>Change Password</ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline" color="medium" class="icon"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="people-outline"></ion-icon>
+      <ion-label>Invites Friends</ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline" color="medium" class="icon"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="newspaper-outline"></ion-icon>
+      <ion-label>FAQs</ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline" color="medium" class="icon"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none" (click)="onLogOut()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      <ion-label>Log out</ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline" color="medium" class="icon"></ion-icon>
+    </ion-item>
+  </div>
+</ion-content>

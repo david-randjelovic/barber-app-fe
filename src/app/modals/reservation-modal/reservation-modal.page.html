@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Add Reservation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="reservationService.reservationForm">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label position="stacked">Service</ion-label>
+        <ion-select formControlName="service" placeholder="Select One" interface="popover" label="Service">
+          <ion-select-option *ngFor="let service of services" [value]="service">
+            {{ service.name }} - {{ service.price }} DIN
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Date and Time</ion-label>
+        <ion-datetime formControlName="reservation_date" [min]="minDate" minuteValues="0,30" [isDateEnabled]="isWeekday"></ion-datetime>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="onDone()" [disabled]="!reservationService.reservationForm.valid">
+        Done
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

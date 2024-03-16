@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Discovery
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="profile-section">
+    <ion-avatar class="profile-avatar">
+      <img [src]="userService.userData?.profile_picture_url ?? '../../../assets/img/default-pfp.svg'"/>
+    </ion-avatar>
+    <div class="profile-info">
+      <ion-label class="username">{{userService.userData?.first_name}} {{userService.userData?.second_name}}</ion-label>
+      <ion-label class="newbie">Newbie</ion-label>
+    </div>
+  </div>
+
+  <form class="post-section" [formGroup]="postService.postForm" (ngSubmit)="submitPost()">
+
+    <div class="input-group">
+      <ion-input placeholder="Enter a heading" class="heading-input" formControlName="heading"></ion-input>
+      <ion-input placeholder="Enter a subheading" class="subheading-input" formControlName="subheading"></ion-input>
+    </div>
+  
+    <div class="text-area-container">
+      <ion-textarea placeholder="What's on your mind?" auto-grow="true" formControlName="text"></ion-textarea>
+      <ion-button fill="clear" class="attach-btn" (click)="fileInput.click()">
+        <ion-icon name="attach-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <input 
+        type="file" 
+        #fileInput 
+        accept="image/*" 
+        style="display: none" 
+        (change)="onFileSelected($event)"
+      />
+    </div>
+  
+    <div *ngIf="selectedImage" class="image-preview-container">
+      <img [src]="selectedImage" class="image-preview">
+      <button class="remove-image-btn" (click)="removeSelectedImage()">
+        X
+      </button>
+    </div>
+  
+    <ion-button type="submit" [disabled]="!postService.postForm.valid">Post</ion-button>
+    
+  </form>
+
+  <ion-card *ngFor="let post of posts">
+    <img alt="Silhouette of mountains" [src]="'http://127.0.0.1:8000/' + post.image" />
+    <ion-card-header>
+      <ion-card-title>{{post.heading}}</ion-card-title>
+      <ion-card-subtitle>{{post.subheading}}</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      {{post.text}}
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Reservations
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-segment value="active" [(ngModel)]="tab">
+    <ion-segment-button value="active">
+      <ion-label>Active</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="archived">
+      <ion-label>Archived</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- List of active reservations -->
+  <ion-list *ngIf="reservationService.activeReservations.length > 0 && tab === 'active'">
+    <ion-item button detail="false" *ngFor="let activeReservation of reservationService.activeReservations">
+      <ion-label>
+        <h3>{{activeReservation.serviceType}}</h3>
+        <p>Price: {{activeReservation.price}} DIN</p>
+        <p>{{activeReservation.date | date:'short'}} - Reserved by: {{activeReservation.clientName}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- List of archived reservations -->
+  <ion-list *ngIf="reservationService.archivedReservations.length > 0 && tab === 'archived'">
+    <ion-item button detail="false" *ngFor="let archivedReservation of reservationService.archivedReservations">
+      <ion-label>
+        <h3>{{archivedReservation.serviceType}}</h3>
+        <p>Price: {{archivedReservation.price}} DIN</p>
+        <p>{{archivedReservation.date | date:'short'}} - Reserved by: {{archivedReservation.clientName}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Add new reservation button and text -->
+  <div class="add-reservation-button" *ngIf="reservationService.activeReservations.length === 0 && tab !== 'archived'">
+    <ion-button fill="clear" size="large" (click)="openModal()">
+      <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+    </ion-button>
+    <ion-text class="add-reservation-text">Add new reservation</ion-text>
+  </div>
+
+</ion-content>

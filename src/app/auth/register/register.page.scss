@@ -1,0 +1,37 @@
+ion-segment-button{
+    margin-bottom: 20px;
+}
+
+.toggle_btn {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    z-index: 9999;
+}
+
+.login-btn {
+    --border-radius: 14px;
+    margin-top: 20px;
+}
+
+.register {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    font-size: 14px;
+    .regiterBtn {
+        margin-left: 10px;
+        color: var(--ion-color-primary);
+    }
+}
+
+.ripple-parent {
+    position: relative;
+    overflow: hidden;
+}
+.warning-message {
+    color: red;
+    text-align: center;
+}

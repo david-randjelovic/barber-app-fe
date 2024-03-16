@@ -1,0 +1,60 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-buttons>
+        <ion-back-button defaultHref="/login"></ion-back-button>
+      </ion-buttons>
+    </ion-buttons>
+    <ion-title>Create New Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" class="segment">
+  
+  <!-- Client Register -->
+  <form [formGroup]="authService.registerClientForm" (ngSubmit)="onRegisterClient()">
+    <ion-item>
+      <ion-input label="First Name" labelPlacement="floating" type="text" formControlName="first_name"></ion-input>
+      <ion-icon slot="end" name="person-outline" class="toggle_btn"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Second Name" labelPlacement="floating" type="text" formControlName="second_name"></ion-input>
+      <ion-icon slot="end" name="person-outline" class="toggle_btn"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Email" labelPlacement="floating" type="email" formControlName="email"></ion-input>
+      <ion-icon slot="end" name="mail-outline" class="toggle_btn"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Phone Number" labelPlacement="floating" type="text" formControlName="phone_number" appNumeric></ion-input>
+      <ion-icon slot="end" name="call-outline" class="toggle_btn"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Password" labelPlacement="floating" [type]="viewPassword== true?'text':'password'" formControlName="password"></ion-input>
+      <ion-icon slot="end" [name]="viewPassword == true? 'eye-outline':'eye-off-outline'" (click)="changeType('password')" class="toggle_btn"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Confirm Password" labelPlacement="floating" [type]="viewConfirmPassword== true?'text':'password'" formControlName="confirm_password"></ion-input>
+      <ion-icon slot="end" [name]="viewConfirmPassword == true? 'eye-outline':'eye-off-outline'" (click)="changeType('confirmPassword')" class="toggle_btn"></ion-icon>
+    </ion-item>
+
+    <ion-button expand="block" shape="round" class="login-btn" type="submit" [disabled]="!authService.registerClientForm.valid">
+      Sign Up
+    </ion-button>
+
+    <p class="warning-message" *ngIf="(!authService.registerClientForm.get('first_name')?.valid && authService.registerClientForm.get('first_name')?.touched) || (!authService.registerClientForm.get('second_name')?.valid && authService.registerClientForm.get('second_name')?.touched)">First, Second name is required.</p>
+    <p class="warning-message" *ngIf="!authService.registerClientForm.get('email')?.valid && authService.registerClientForm.get('email')?.touched">Please enter a valid email address.</p>
+    <p class="warning-message" *ngIf="!authService.registerClientForm.get('phone_number')?.valid && authService.registerClientForm.get('phone_number')?.touched">Phone should be at least 7 characters long.</p>
+    <p class="warning-message" *ngIf="!authService.registerClientForm.get('password')?.valid && authService.registerClientForm.get('password')?.touched">Password should be at least 6 characters long.</p>
+    <p class="warning-message" *ngIf="authService.registerClientForm.get('password')?.value !== authService.registerClientForm.get('confirm_password')?.value && authService.registerClientForm.get('confirm_password')?.touched">Password and Confirm Password field must match.</p>
+  </form>
+
+  <div class="register">
+    <p>Already have an account?</p>
+    <div class="regiterBtn ion-activatable ripple-parent" (click)="onBack()">
+      <p>Sign In</p>
+      <ion-ripple-effect></ion-ripple-effect>
+    </div>
+  </div>
+
+</ion-content>
