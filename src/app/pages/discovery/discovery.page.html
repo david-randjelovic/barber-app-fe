@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <form class="post-section" [formGroup]="postService.postForm" (ngSubmit)="submitPost()">
+  <form class="post-section" [formGroup]="postService.postForm" (ngSubmit)="submitPost()" *ngIf="userService.userData?.type === 1">
 
     <div class="input-group">
       <ion-input placeholder="Enter a heading" class="heading-input" formControlName="heading"></ion-input>

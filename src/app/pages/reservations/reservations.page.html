@@ -8,8 +8,11 @@
 
 <ion-content [fullscreen]="true">
   <ion-segment value="active" [(ngModel)]="tab">
-    <ion-segment-button value="active">
+    <ion-segment-button value="active" *ngIf="userService.userData?.type === 0">
       <ion-label>Active</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="today" *ngIf="userService.userData?.type === 1">
+      <ion-label>Today</ion-label>
     </ion-segment-button>
     <ion-segment-button value="archived" (click)="loadArchivedReservations()">
       <ion-label>Archived</ion-label>
@@ -18,6 +21,16 @@
 
   <!-- List of active reservations -->
   <ion-list *ngIf="reservationService.activeReservations.length > 0 && tab === 'active'">
+    <ion-item button detail="false" *ngFor="let activeReservation of reservationService.activeReservations">
+      <ion-label>
+        <h3>{{activeReservation.serviceType}}</h3>
+        <p>Price: {{activeReservation.price}} DIN</p>
+        <p>{{activeReservation.date | date:'short'}} - Reserved by: {{activeReservation.clientName}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="reservationService.activeReservations.length > 0 && tab === 'today'">
     <ion-item button detail="false" *ngFor="let activeReservation of reservationService.activeReservations">
       <ion-label>
         <h3>{{activeReservation.serviceType}}</h3>

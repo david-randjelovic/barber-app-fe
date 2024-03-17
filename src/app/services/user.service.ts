@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { UserModel } from "../models/user.model";
 import { DataService } from "./data.service";
@@ -12,6 +12,8 @@ import { DataService } from "./data.service";
 })
 export class UserService {
     public userData!: UserModel | null;
+    private userDataSubject = new BehaviorSubject<UserModel | null>(null);
+    userData$ = this.userDataSubject.asObservable();
 
     public userSettingsForm: FormGroup = this._fb.group({
         country: [''],
@@ -30,17 +32,20 @@ export class UserService {
     ) {}
     
     public getUserData(): void {
-        if (!this.userData) {
-            this.userDataCall().subscribe({
-              next: response => {
-                this.userData = response;
-              },
-              error: error => {
-                this._dataService.showToast('Oops, something went wrong! Please contact an administrator.', 'danger');
-                this.onLogOut();
-              }
-            })
+      if (!this.userData) {
+        this.userDataCall().subscribe({
+          next: (response: UserModel) => {
+            this.userData = response;
+            this.userDataSubject.next(response);
+          },
+          error: (error: any) => {
+            this._dataService.showToast('Oops, something went wrong! Please contact an administrator.', 'danger');
+            this.onLogOut();
           }
+        });
+      } else {
+        this.userDataSubject.next(this.userData);
+      }
     }
 
     public onLogOut(): void {
