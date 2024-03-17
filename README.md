@@ -10,7 +10,7 @@ This Angular Barber Shop Application is an open-source project designed to showc
 ## Features
 
 - **Appointment Booking:** Users can book appointments.
-- **Simple service dropdown:** Pick the haircut style you'd.
+- **Simple service dropdown:** Pick the haircut style you'd like.
 - **News Catalog:** Browse through barbers new posts.
 - **Admin Dashboard:** For the barber shop owner to manage appointments and services.
 
