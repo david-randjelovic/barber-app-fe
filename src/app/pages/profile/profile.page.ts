@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
-import { ProfileService } from '../services/profile.service';
-import { UserService } from '../services/user.service';
+import { ProfileService } from '../../services/profile.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profile',

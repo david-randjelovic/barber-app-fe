@@ -9,15 +9,15 @@ const routes: Routes = [
     children: [
       {
         path: 'discovery',
-        loadChildren: () => import('../discovery/discovery.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../pages/discovery/discovery.module').then(m => m.Tab1PageModule)
       },
       {
         path: 'reservations',
-        loadChildren: () => import('../reservations/reservations.module').then(m => m.Tab2PageModule)
+        loadChildren: () => import('../pages/reservations/reservations.module').then(m => m.Tab2PageModule)
       },
       {
         path: 'profile',
-        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
+        loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
         path: '',

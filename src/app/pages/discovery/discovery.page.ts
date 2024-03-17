@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
-import { PostService } from '../services/post.service';
-import { DataService } from '../services/data.service';
-import { PostModel } from '../models/post.model';
+import { UserService } from '../../services/user.service';
+import { PostService } from '../../services/post.service';
+import { DataService } from '../../services/data.service';
+import { PostModel } from '../../models/post.model';
 
 @Component({
   selector: 'app-discovery',

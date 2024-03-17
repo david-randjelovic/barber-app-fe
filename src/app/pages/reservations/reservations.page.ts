@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ReservationModel } from '../models/reservation.model';
-import { ReservationModalPage } from '../modals/reservation-modal/reservation-modal.page';
-import { ReservationService } from '../services/reservation.service';
-import { DataService } from '../services/data.service';
+import { ReservationModel } from '../../models/reservation.model';
+import { ReservationModalPage } from '../../modals/reservation-modal/reservation-modal.page';
+import { ReservationService } from '../../services/reservation.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-reservations',
