@@ -73,4 +73,4 @@ This project is licensed under the MIT License - see the LICENSE file in each re
 
 ## Contact
 
-If you have any questions or want to reach out for collaboration, feel free to contact me through GitHub or [insert your preferred contact method here].
+If you have any questions or want to reach out for collaboration, feel free to contact me through GitHub or LinkedIn.
