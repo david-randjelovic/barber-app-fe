@@ -11,7 +11,10 @@ import { ReservationModel } from "../models/reservation.model";
 export class ReservationService {
 
     public activeReservations: Array<ReservationModel> = [];
-    public archivedReservations: any[] = [];
+    public todaysReservations: Array<ReservationModel> = [];
+    public archivedReservations: Array<ReservationModel> = [];
+    public certainDateReservations: Array<ReservationModel> = [];
+
     public minDate = new Date().toISOString().split('T')[0];
 
     public reservationForm: FormGroup = this._fb.group({
@@ -31,6 +34,10 @@ export class ReservationService {
 
     public getTodaysReservations(): Observable<ReservationModel[]> {
         return this._http.get<ReservationModel[]>(environment.apiUrl + 'reservations/today');
+    }
+
+    public getReservationsForDate(date: string): Observable<ReservationModel[]> {
+        return this._http.get<ReservationModel[]>(environment.apiUrl + `reservations/date/${date}`)
     }
 
     public onCreateReservation(): Observable<ReservationModel> {

@@ -19,14 +19,7 @@ export class ReservationModalPage {
     { name: 'Beard Trimming', price: 250 }
   ];
 
-  public isWeekday = (dateString: string) => {
-    const date = new Date(dateString);
-    const utcDay = date.getUTCDay();
-
-    return utcDay !== 0;
-  };
-
-  constructor(public reservationService: ReservationService, private _modalController: ModalController, private _dataService: DataService) {
+  constructor(public reservationService: ReservationService, private _modalController: ModalController, public dataService: DataService) {
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
   }
@@ -43,10 +36,10 @@ export class ReservationModalPage {
     ).subscribe({
       next: response => {
         this.reservationService.activeReservations.push(response);
-        this._dataService.showToast('Reservation successful!', 'success');
+        this.dataService.showToast('Reservation successful!', 'success');
       },
       error: error => {
-        this._dataService.showToast('Oops, something went wrong! Please contact an administrator.', 'danger');
+        this.dataService.showToast('Oops, something went wrong! Please contact an administrator.', 'danger');
       }
     })
   }

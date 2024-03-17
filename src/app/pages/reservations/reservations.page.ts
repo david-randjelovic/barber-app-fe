@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { DatetimeChangeEventDetail, ModalController } from '@ionic/angular';
 import { ReservationModel } from '../../models/reservation.model';
 import { ReservationModalPage } from '../../modals/reservation-modal/reservation-modal.page';
 import { ReservationService } from '../../services/reservation.service';
@@ -17,7 +17,7 @@ export class ReservationsPage implements OnInit {
   private _unsubscribe$ = new Subject<void>();
   public tab: string = 'active';
 
-  constructor(private _modalController: ModalController, public reservationService: ReservationService, private _dataService: DataService, public userService: UserService) {}
+  constructor(private _modalController: ModalController, public reservationService: ReservationService, public dataService: DataService, public userService: UserService) {}
 
   ngOnInit(): void {
     this.userService.userData$
@@ -27,6 +27,7 @@ export class ReservationsPage implements OnInit {
           if (userData.type === 0) {
             this._loadActiveReservations();
           } else {
+            this.tab = 'today';
             this._loadTodaysReservations();
           }
         }
@@ -40,11 +41,21 @@ export class ReservationsPage implements OnInit {
           this.reservationService.archivedReservations = reservations;
         },
         error: (error) => {
-          this._dataService.showToast('Oops, active reservations could not be fetched.', 'danger');
+          this.dataService.showToast('Oops, active reservations could not be fetched.', 'danger');
         }
       });
     }
   }
+
+  public onDateSelected(event: CustomEvent) {
+    const selectedDate = event.detail.value;
+  
+    if (typeof selectedDate === 'string') {
+      const dateOnly = selectedDate.split('T')[0];
+      this._loadReservationsForDate(dateOnly);
+    }
+  }
+  
 
   private _loadActiveReservations(): void {
     this.reservationService.getActiveReservations().subscribe({
@@ -52,7 +63,7 @@ export class ReservationsPage implements OnInit {
         this.reservationService.activeReservations = reservations;
       },
       error: (error) => {
-        this._dataService.showToast('Oops, active reservations could not be fetched.', 'danger');
+        this.dataService.showToast('Oops, active reservations could not be fetched.', 'danger');
       }
     });
   }
@@ -60,11 +71,22 @@ export class ReservationsPage implements OnInit {
   private _loadTodaysReservations(): void {
     this.reservationService.getTodaysReservations().subscribe({
         next: (reservations) => {
-            console.log(reservations);
+          this.reservationService.todaysReservations = reservations;
         },
         error: (error) => {
-            this._dataService.showToast('Error fetching today\'s reservations', 'danger');
+            this.dataService.showToast('Error fetching today\'s reservations', 'danger');
         }
+    });
+  }
+
+  private _loadReservationsForDate(date: string) {
+    this.reservationService.getReservationsForDate(date).subscribe({
+      next: (reservations) => {
+        this.reservationService.certainDateReservations = reservations;
+      },
+      error: (error) => {
+        this.dataService.showToast('Oops, something went wrong with fetching data.', 'danger');
+      },
     });
   }
 

@@ -22,6 +22,13 @@ export class DataService {
         toast.present();
     }
 
+    public isWeekday = (dateString: string) => {
+        const date = new Date(dateString);
+        const utcDay = date.getUTCDay();
+    
+        return utcDay !== 0;
+    };
+
     // public async openUserModal(userInfo: UserModel): Promise<void> {
     //     const modal = await this._modalController.create({
     //         component: ProfileInfoPage,

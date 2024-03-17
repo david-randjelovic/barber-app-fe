@@ -22,7 +22,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Date and Time</ion-label>
-        <ion-datetime formControlName="reservation_date" [min]="minDate" minuteValues="0,30" [isDateEnabled]="isWeekday"></ion-datetime>
+        <ion-datetime formControlName="reservation_date" [min]="minDate" minuteValues="0,30" [isDateEnabled]="dataService.isWeekday"></ion-datetime>
       </ion-item>
     </ion-list>
   </form>

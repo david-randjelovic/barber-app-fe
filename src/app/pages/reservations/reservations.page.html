@@ -14,6 +14,9 @@
     <ion-segment-button value="today" *ngIf="userService.userData?.type === 1">
       <ion-label>Today</ion-label>
     </ion-segment-button>
+    <ion-segment-button value="upcoming">
+      <ion-label>Upcoming</ion-label>
+    </ion-segment-button>
     <ion-segment-button value="archived" (click)="loadArchivedReservations()">
       <ion-label>Archived</ion-label>
     </ion-segment-button>
@@ -30,12 +33,13 @@
     </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="reservationService.activeReservations.length > 0 && tab === 'today'">
-    <ion-item button detail="false" *ngFor="let activeReservation of reservationService.activeReservations">
+  <!-- List of todays reservations -->
+  <ion-list *ngIf="reservationService.todaysReservations.length > 0 && tab === 'today'">
+    <ion-item button detail="false" *ngFor="let todaysReservation of reservationService.todaysReservations">
       <ion-label>
-        <h3>{{activeReservation.serviceType}}</h3>
-        <p>Price: {{activeReservation.price}} DIN</p>
-        <p>{{activeReservation.date | date:'short'}} - Reserved by: {{activeReservation.clientName}}</p>
+        <h3>{{todaysReservation.serviceType}}</h3>
+        <p>Price: {{todaysReservation.price}} DIN</p>
+        <p>{{todaysReservation.date | date:'short'}} - Reserved by: {{todaysReservation.clientName}}</p>
       </ion-label>
     </ion-item>
   </ion-list>
@@ -51,8 +55,22 @@
     </ion-item>
   </ion-list>
 
+  <ion-list *ngIf="tab === 'upcoming'">
+    <ion-item>
+      <ion-label position="stacked">Date and Time</ion-label>
+      <ion-datetime presentation="date" [isDateEnabled]="dataService.isWeekday" (ionChange)="onDateSelected($event)"></ion-datetime>
+    </ion-item>
+    <ion-item button detail="false" *ngFor="let certainDateReservation of reservationService.certainDateReservations">
+      <ion-label>
+        <h3>{{certainDateReservation.serviceType}}</h3>
+        <p>Price: {{certainDateReservation.price}} DIN</p>
+        <p>{{certainDateReservation.date | date:'short'}} - Reserved by: {{certainDateReservation.clientName}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
   <!-- Add new reservation button and text -->
-  <div class="add-reservation-button" *ngIf="reservationService.activeReservations.length === 0 && tab !== 'archived'">
+  <div class="add-reservation-button" *ngIf="(reservationService.activeReservations.length === 0 && reservationService.todaysReservations.length === 0) && tab !== 'archived'">
     <ion-button fill="clear" size="large" (click)="openModal()">
       <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
     </ion-button>
