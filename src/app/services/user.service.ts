@@ -1,13 +1,11 @@
-import { Observable, finalize } from "rxjs";
-import { UserModel } from "../models/user.model";
-import { environment } from "src/environments/environment";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { AuthService } from "./auth.service";
-import { DataService } from "./data.service";
 import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { LoaderService } from "./loader.service";
 import { Injectable } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
+import { UserModel } from "../models/user.model";
+import { DataService } from "./data.service";
 
 @Injectable({
     providedIn: 'root'
@@ -25,21 +23,15 @@ export class UserService {
     });
 
     constructor(
-        private _loaderService: LoaderService,
         private _router: Router,
         private _http: HttpClient,
         private _dataService: DataService,
-        private _authService: AuthService,
         private _fb: FormBuilder
     ) {}
     
     public getUserData(): void {
         if (!this.userData) {
-            this.userDataCall().pipe(
-              finalize(() => {
-                this._loaderService.hideLoader();
-              })
-            ).subscribe({
+            this.userDataCall().subscribe({
               next: response => {
                 this.userData = response;
               },

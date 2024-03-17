@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
 
   public viewPassword: boolean = false;
 
-  constructor(public authService: AuthService, private _router: Router, private _dataService: DataService, private _loaderService: LoaderService) { }
+  constructor(public authService: AuthService, private _router: Router, private _dataService: DataService) { }
 
   ngOnInit() {
   }
@@ -28,12 +28,7 @@ export class LoginPage implements OnInit {
   }
 
   public onLogin(): void {
-    this._loaderService.showLoader('Logging in', 'circular');
-    this.authService.loginCall().pipe(
-      finalize(() => {
-        this._loaderService.hideLoader();
-      })
-    ).subscribe({
+    this.authService.loginCall().subscribe({
       next: response => {
         this._setTokens(response.token!, response.user_id!)
         this._router.navigateByUrl('/tabs/tabs/discovery');

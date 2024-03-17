@@ -1,9 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
-import { finalize } from 'rxjs';
-import { LoaderService } from '../services/loader.service';
-import { UserService } from '../services/user.service';
 import { ProfileService } from '../services/profile.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +17,6 @@ export class ProfilePage {
     public userService: UserService, 
     public profileService: ProfileService,
     private _actionSheetController: ActionSheetController, 
-    private _loaderService: LoaderService
     ) {}
 
   public onBannerClick(): void {
@@ -47,16 +44,11 @@ export class ProfilePage {
   }
 
   public uploadProfilePicture(file: File): void {
-    this._loaderService.showLoader('Setting profile picture...', 'circular');
 
     const formData = new FormData();
     formData.append('profile_picture', file, file.name);
 
-    this.profileService.profilePictureCall(formData).pipe(
-      finalize(() => {
-        this._loaderService.hideLoader();
-      })
-    ).subscribe({
+    this.profileService.profilePictureCall(formData).subscribe({
       next: response => {
 
       },
@@ -67,16 +59,11 @@ export class ProfilePage {
   }
 
   public uploadBanner(file: File): void {
-    this._loaderService.showLoader('Setting banner...', 'circular');
 
     const formData = new FormData();
     formData.append('banner', file, file.name);
 
-    this.profileService.bannerCall(formData).pipe(
-      finalize(() => {
-        this._loaderService.hideLoader();
-      })
-    ).subscribe({
+    this.profileService.bannerCall(formData).subscribe({
       next: response => {
 
       },

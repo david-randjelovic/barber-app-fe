@@ -3,8 +3,6 @@ import { UserService } from '../services/user.service';
 import { PostService } from '../services/post.service';
 import { DataService } from '../services/data.service';
 import { PostModel } from '../models/post.model';
-import { environment } from 'src/environments/environment';
-import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-discovery',
@@ -16,7 +14,7 @@ export class DiscoveryPage implements OnInit {
   public selectedImage: string | ArrayBuffer | null = null;
   public posts: PostModel[] = [];
 
-  constructor(public userService: UserService, public postService: PostService, private _data: DataService, private _loaderService: LoaderService) {}
+  constructor(public userService: UserService, public postService: PostService, private _data: DataService) {}
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe({
@@ -53,7 +51,6 @@ export class DiscoveryPage implements OnInit {
   }
 
   public submitPost(): void {
-    if (this.postService.postForm.valid) {
       const formData = new FormData();
       for (const key in this.postService.postForm.value) {
         formData.append(key, this.postService.postForm.value[key]);
@@ -68,7 +65,6 @@ export class DiscoveryPage implements OnInit {
           this._data.showToast('Oops, something went wrong.', 'danger');
         }
       });
-    }
   }
 
 }

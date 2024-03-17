@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +13,7 @@ export class RegisterPage {
   public viewPassword: boolean = false;
   public segmentType: string = 'client';
 
-  constructor(public authService: AuthService, private _navController: NavController, private _loaderService: LoaderService) { }
+  constructor(public authService: AuthService, private _navController: NavController) { }
 
 
   public changeType(type: string): void {
@@ -27,17 +25,11 @@ export class RegisterPage {
   }
 
   public onRegisterClient(): void {
-    this._loaderService.showLoader('Logging in', 'circular');
-    this.authService.registerClientCall().pipe(
-      finalize(() => {
-        this._loaderService.hideLoader();
-      })
-    ).subscribe({
+    this.authService.registerClientCall().subscribe({
       next: respone => {
         this._navController.back();
       },
       error: error => {
-
       }
     })
   }

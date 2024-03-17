@@ -22,17 +22,19 @@ export class TokenInterceptor implements HttpInterceptor {
       });
     }
 
-    this._loaderService.showLoader('Getting Data', 'circular');
+    this._loaderService.showLoader('Please wait...', 'circular');
     
     return next.handle(request).pipe(
       tap(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
+            this._loaderService.hideLoader();
           }
         },
         (err: any) => {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401) {
+              this._loaderService.hideLoader();
               this._dataService.showToast('Invalid session.', 'danger');
               this._userService.onLogOut();
             }
@@ -40,10 +42,9 @@ export class TokenInterceptor implements HttpInterceptor {
         }
       ),
       finalize(() => {
-        console.log('test');
         setTimeout(() => {
           this._loaderService.hideLoader();
-        },200)
+        },500)
       })
     );
   }
