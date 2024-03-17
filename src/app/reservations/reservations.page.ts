@@ -17,16 +17,27 @@ export class ReservationsPage implements OnInit {
   constructor(private _modalController: ModalController, public reservationService: ReservationService, private _dataService: DataService) {}
 
   ngOnInit(): void {
-    this.reservationService.getReservations().subscribe({
+    this.reservationService.getActiveReservations().subscribe({
       next: (reservations) => {
-        const now = new Date();
-        this.reservationService.activeReservations = reservations.filter(reservation => new Date(reservation.date) > now);
-        this.reservationService.archivedReservations = reservations.filter(reservation => new Date(reservation.date) <= now);
+        this.reservationService.activeReservations = reservations;
       },
       error: (error) => {
-        this._dataService.showToast('There was an error retrieving the reservations, please contact an Administrator!', 'danger')
+        this._dataService.showToast('Oops, active reservations could not be fetched.', 'danger');
       }
-    })
+    });
+  }
+
+  public loadArchivedReservations(): void {
+    if (this.reservationService.archivedReservations.length === 0) {
+      this.reservationService.getArchivedReservations().subscribe({
+        next: (reservations) => {
+          this.reservationService.archivedReservations = reservations;
+        },
+        error: (error) => {
+          this._dataService.showToast('Oops, active reservations could not be fetched.', 'danger');
+        }
+      });
+    }
   }
 
   async openModal() {

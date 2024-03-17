@@ -21,11 +21,16 @@ export class ReservationService {
 
     constructor (private _fb: FormBuilder, private _http: HttpClient) {}
 
-    public getReservations(): Observable<ReservationModel[]> {
-        return this._http.get<ReservationModel[]>(environment.apiUrl + 'reservations');
+    public getActiveReservations(): Observable<ReservationModel[]> {
+        return this._http.get<ReservationModel[]>(`${environment.apiUrl}reservations/active`);
+    }
+    
+    public getArchivedReservations(): Observable<ReservationModel[]> {
+        return this._http.get<ReservationModel[]>(`${environment.apiUrl}reservations/archived`);
     }
 
     public onCreateReservation(): Observable<ReservationModel> {
         return this._http.post<ReservationModel>(environment.apiUrl + 'create-reservation', this.reservationForm.value)
     }
+
 }
